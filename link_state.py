@@ -15,7 +15,7 @@ def dijkstra(graph, start, end):
 
         if node == end:
             return path[node], distances[node]
-
+        
         for neighbor, weight in graph[node].items():
             if distances[node] + weight < distances[neighbor]:
                 distances[neighbor] = distances[node] + weight

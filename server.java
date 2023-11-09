@@ -1,23 +1,30 @@
-import java.io.*;
 import java.net.*;
+import java.io.*;
+import java.util.*;
 
 public class server {
-    public static void main(String[] args) throws IOException {
-        ServerSocket serverSocket = new ServerSocket(12345);
 
-        System.out.println("Server is listening on port 12345...");
+    public static void main (String[] args) throws IOException {
+        ServerSocket serverSocket = new ServerSocket(8080);
+        System.out.println("Listening on port: 8080");
+        Socket clienSocket = serverSocket.accept();
         
-        Socket clientSocket = serverSocket.accept();
-
-        BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-        PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+        BufferedReader in = new BufferedReader(new InputStreamReader(clienSocket.getInputStream()));
+        PrintWriter out = new PrintWriter(clienSocket.getOutputStream(), true);
 
         String message = in.readLine();
-        System.out.println("Client says: " + message);
 
-        out.println("Server received your message: " + message);
+        System.out.println("Client sent you a message: " + message);
 
-        clientSocket.close();
+        System.out.println("Enter a message for client:");
+        Scanner scanner = new Scanner(System.in);
+        String msg = scanner.nextLine();
+        // String demo = "Gelloooo";
+
+        out.println(msg);
+
+        scanner.close();
+        clienSocket.close();
         serverSocket.close();
     }
 }
